@@ -1,8 +1,10 @@
 import  React, {useState} from 'react';
-import {View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard} from 'react-native'
+import {View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Alert} from 'react-native'
+
 import Card from '../components/Card';
-import Colors from '../constants/Colors';
 import Input from '../components/Input'
+import Colors from '../constants/Colors'
+import NumberContainer from '../components/NumberContainer'
 
 
 const StartGameScreen = props => {
@@ -22,17 +24,25 @@ const StartGameScreen = props => {
 
     const confirmInputHandler = () => {
         const chosenNumber = parseInt(enteredValue);
-        if(chosenNumber === NaN || chosenNumber <=0 || chosenNumber > 99) {
+        if(isNaN(chosenNumber === NaN || chosenNumber <=0 || chosenNumber > 99)) {
+            Alert.alert('Invalid Number!', 'Number has to be a number between 1 and 99.',[{text: 'Okay', style: 'destructive', onPress: resetInputHandler}])
             return
         }
         setConfirmed(true);
+        setSelectedNumber(parseInt(chosenNumber))
         setEnteredValue('');
-        setSelectedNumber()
+        Keyboard.dismiss();
     }
 
     let confirmedOutput;
+
     if(confirmed) {
-        confirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>
+        confirmedOutput = 
+        <Card style={styles.summaryContainer}>
+            <Text>You Selected</Text>
+            <NumberContainer>{selectedNumber}</NumberContainer>
+            <Button title="Start Game" />
+        </Card>
     }
     return (
         <TouchableWithoutFeedback 
@@ -43,6 +53,7 @@ const StartGameScreen = props => {
             <Text style={styles.title}>Start a New Game!</Text>
             <Card style={styles.inputContainer}>
                 <Text>Select a Number</Text>
+               
                <Input 
                style={styles.input} 
                blurOnSubmit 
@@ -91,6 +102,10 @@ const styles = StyleSheet.create({
     inputh: {
         width: 50,
         textAlign: 'center'
+    },
+    summaryContainer: {
+        margin: 20,
+        alignItems: 'center'
     }
 });
 
