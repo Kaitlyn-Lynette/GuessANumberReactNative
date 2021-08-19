@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     button: {
         width: 100
     },
-    inputh: {
+    input: {
         width: 50,
         textAlign: 'center'
     },
