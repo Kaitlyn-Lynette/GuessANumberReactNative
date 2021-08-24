@@ -1,57 +1,68 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Font from 'expo-font';
-import {AppLoading} from 'expo'
+import AppLoading from 'expo-app-loading';
 
 import Header from './components/Header';
-import StartGameScreen from './screens/StartGameScreen'
-import GameScreen from './screens/GameScreen'
-import GameOverScreen from './screens/GameOverScreen'
+import StartGameScreen from './screens/StartGameScreen';
+import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
 
 const fetchFonts = () => {
-  Font.loadAsync({
-    'open-sans': require('./assets/fonts/OpenSans-Regular'),
-    'open-sans-bold': require('./assets/fonts/OpenSans-Bold')
+  return Font.loadAsync({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
   });
-}
+};
 
 export default function App() {
-  const [userNumber, setUserNumber] = useState()
-  const [guessRounds, setGuessRounds] = useState(0)
+  const [userNumber, setUserNumber] = useState();
+  const [guessRounds, setGuessRounds] = useState(0);
   const [dataLoaded, setDataLoaded] = useState(false);
 
-  if(!dataLoaded) {
-    return <AppLoading 
-    startAsync={fetchFonts} 
-    onFinish={()=> setDataLoad=(true)}
-    onError={(err)=> console.log(err)}
-    />
+  if (!dataLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setDataLoaded(true)}
+        onError={err => console.log(err)}
+      />
+    );
   }
-
-  fetchFonts()
 
   const configureNewGameHandler = () => {
     setGuessRounds(0);
-    setUserNumber(null)
-  }
+    setUserNumber(null);
+  };
 
-
-  const startGameHandler = (selectedNumber) => {
-    setUserNumber(selectedNumber)
-    setGuessRounds(0);
-  }
+  const startGameHandler = selectedNumber => {
+    setUserNumber(selectedNumber);
+  };
 
   const gameOverHandler = numOfRounds => {
     setGuessRounds(numOfRounds);
-  }
+  };
 
-  //Default screen is Start Game Screen
-  let content = <StartGameScreen onStartGame={startGameHandler}/>
-
-  if(userNumber && guessRounds <=0) {
-    content = <GameScreen  userChoice={userNumber} onGameOver={gameOverHandler}/>
-  } else if (guessRounds>0) {
-    content = <GameOverScreen roundsNumber={guessRounds} userNumber={userNumber} onRestart={configureNewGameHandler}/>
+  let content = <StartGameScreen onStartGame={startGameHandler} />;
+  content = (
+    <GameOverScreen
+      roundsNumber={1}
+      userNumber={1}
+      onRestart={configureNewGameHandler}
+    />
+  );
+  if (userNumber && guessRounds <= 0) {
+    content = (
+      <GameScreen userChoice={userNumber} onGameOver={gameOverHandler} />
+    );
+  } else if (guessRounds > 0) {
+    content = (
+      <GameOverScreen
+        roundsNumber={guessRounds}
+        userNumber={userNumber}
+        onRestart={configureNewGameHandler}
+      />
+    );
   }
 
   return (
@@ -67,4 +78,3 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-
