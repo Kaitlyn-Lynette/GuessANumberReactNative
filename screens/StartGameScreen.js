@@ -2,18 +2,19 @@ import  React, {useState} from 'react';
 import {View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Alert} from 'react-native'
 
 import Card from '../components/Card';
-import Input from '../components/Input'
-import Colors from '../constants/Colors'
-import NumberContainer from '../components/NumberContainer'
-import BodyText from '../components/BodyText'
-import TitleText from '../components/TitleText'
+import Input from '../components/Input';
+import Colors from '../constants/Colors';
+import NumberContainer from '../components/NumberContainer';
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
+import MainButton from '../components/MainButton';
 
 
 const StartGameScreen = props => {
 
     const[enteredValue, setEnteredValue] = useState('');
     const[confirmed, setConfirmed] = useState(false);
-    const[selectedNumber, setSelectedNumber] = useState('false')
+    const[selectedNumber, setSelectedNumber] = useState()
 
     const numberInputHandler = inputText => {
         setEnteredValue(inputText.replace(/[^0-9]/g, ''))
@@ -46,10 +47,9 @@ const StartGameScreen = props => {
         <Card style={styles.summaryContainer}>
             <BodyText>You Selected</BodyText>
             <NumberContainer>{selectedNumber}</NumberContainer>
-            <Button 
-            title="Start Game" 
-            onPress={()=>props.onStartGame(selectedNumber)}
-            />
+            <MainButton onPress={()=> props.onStartGame(selectedNumber)}>
+            Start Game
+            </MainButton>
         </Card>
         )
     }
