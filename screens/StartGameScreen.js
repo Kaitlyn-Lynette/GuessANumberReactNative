@@ -12,7 +12,7 @@ import TitleText from '../components/TitleText'
 const StartGameScreen = props => {
 
     const[enteredValue, setEnteredValue] = useState('');
-    const[confirmed, setConfirmed] = useState('false');
+    const[confirmed, setConfirmed] = useState(false);
     const[selectedNumber, setSelectedNumber] = useState('false')
 
     const numberInputHandler = inputText => {
@@ -26,12 +26,15 @@ const StartGameScreen = props => {
 
     const confirmInputHandler = () => {
         const chosenNumber = parseInt(enteredValue);
-        if(isNaN(chosenNumber === NaN || chosenNumber <=0 || chosenNumber > 99)) {
-            Alert.alert('Invalid Number!', 'Number has to be a number between 1 and 99.',[{text: 'Okay', style: 'destructive', onPress: resetInputHandler}])
+        if(isNaN(chosenNumber) || chosenNumber <=0 || chosenNumber > 99) {
+            Alert.alert('Invalid Number!', 
+            'Number has to be a number between 1 and 99.',
+            [{text: 'Okay', style: 'destructive', onPress: resetInputHandler}]
+            );
             return
         }
         setConfirmed(true);
-        setSelectedNumber(parseInt(chosenNumber))
+        setSelectedNumber(chosenNumber)
         setEnteredValue('');
         Keyboard.dismiss();
     }
@@ -39,12 +42,16 @@ const StartGameScreen = props => {
     let confirmedOutput;
 
     if(confirmed) {
-        confirmedOutput = 
+        confirmedOutput = (
         <Card style={styles.summaryContainer}>
             <BodyText>You Selected</BodyText>
             <NumberContainer>{selectedNumber}</NumberContainer>
-            <Button title="Start Game" onPress={()=>props.onStartGame(selectedNumber)}/>
+            <Button 
+            title="Start Game" 
+            onPress={()=>props.onStartGame(selectedNumber)}
+            />
         </Card>
+        )
     }
     return (
         <TouchableWithoutFeedback 
@@ -55,7 +62,6 @@ const StartGameScreen = props => {
             <TitleText>Start a New Game!</TitleText>
             <Card style={styles.inputContainer}>
                 <BodyText>Select a Number</BodyText>
-               
                <Input 
                style={styles.input} 
                blurOnSubmit 
