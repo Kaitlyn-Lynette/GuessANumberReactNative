@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     },
     buttonText:{
         color: 'white', 
-        fontFamily: 'open-sans', 
+        fontFamily: 'inter-v', 
         fontSize: 18
     }
 });

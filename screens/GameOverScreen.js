@@ -54,7 +54,7 @@ const styles = StyleSheet.create ({
     }, 
     highlight: {
         color: Colors.primary,
-        fontFamily: 'open-sans-bold',
+        fontFamily: 'inter-v',
     }, 
     resultContainer: {
         marginHorizontal: 20,

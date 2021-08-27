@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import * as Font from 'expo-font';
+import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
 import AppLoading from 'expo-app-loading';
 
 import Header from './components/Header';
@@ -10,8 +10,7 @@ import GameOverScreen from './screens/GameOverScreen';
 
 const fetchFonts = () => {
   return Font.loadAsync({
-    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
-    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+    'inter-v': require('./assets/fonts/Inter-V'),
   });
 };
 
@@ -28,8 +27,8 @@ export default function App() {
         onError={err => console.log(err)}
       />
     );
-  }
-
+}
+ 
   const configureNewGameHandler = () => {
     setGuessRounds(0);
     setUserNumber(null);
@@ -44,6 +43,7 @@ export default function App() {
   };
 
   let content = <StartGameScreen onStartGame={startGameHandler} />;
+
 
   if (userNumber && guessRounds <= 0) {
     content = (

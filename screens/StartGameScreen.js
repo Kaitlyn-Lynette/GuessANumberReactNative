@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     text: {
-        fontFamily: 'open-sans'
+        fontFamily: 'inter-v'
     }
 });
 
